@@ -8,6 +8,7 @@ import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from './reducer';
 import axios from './axios';
 import { db } from './firebase';
+import moment from 'moment';
 
 function Payment({promise}) {
     const [{basket,user},dispatch] = useStateValue();
@@ -22,6 +23,7 @@ function Payment({promise}) {
     const [disabled, setDisabled] = useState(true);
     const [clientSecret, setClientSecret] = useState(true);
 
+
     useEffect(() => {
         // generate the special stripe secret which allows us to charge a customer
         const getClientSecret = async () => {
@@ -32,7 +34,6 @@ function Payment({promise}) {
             });
             setClientSecret(response.data.clientSecret)
         }
-
         getClientSecret();
     }, [basket]);
 
@@ -42,17 +43,17 @@ function Payment({promise}) {
         event.preventDefault();
         setProcessing(true);
 
-        const payload = await stripe.confirmCardPayment(clientSecret,{
-            payment_method:{
-                card: elements.getElement(CardElement)
-            }
-        }).then(({ paymentIntent }) => {
+        // const payload = await stripe.confirmCardPayment(clientSecret,{
+        //     payment_method:{
+        //         card: elements.getElement(CardElement)
+        //     }
+        // }).then(({ paymentIntent }) => {
 
-            db.collection('users').doc(user?.uid).collection('orders').doc(paymentIntent.id)
+            db.collection('users').doc(user?.uid).collection('orders').doc('pi_dsjjdshufbshd')
             .set({
                 basket: basket,
-                amount: paymentIntent.amount,
-                created: paymentIntent.created
+                amount: getBasketTotal(basket) * 100,
+                created: moment().format("MMMM Do YYYY, h:mma")
             })
 
             setSucceeded(true);
@@ -64,7 +65,7 @@ function Payment({promise}) {
             })
 
             history.replace('/orders');
-        });
+        // });
 
     }
 

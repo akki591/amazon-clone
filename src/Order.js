@@ -8,7 +8,8 @@ function Order({ order }) {
     return (
         <div className='order'>
             <h2>Order</h2>
-            <p>{moment.unix(order.data.created).format("MMMM Do YYYY, h:mma")}</p>
+            {/* <p>{moment.unix(order.data.created).format("MMMM Do YYYY, h:mma")}</p> */}
+            <p>{order.data.created}</p>
             <p className="order__id">
                 <small>{order.id}</small>
             </p>

@@ -1,6 +1,8 @@
 import React from 'react';
 import "./Product.css";
 import { useStateValue } from './StateProvider';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Product({id, title, image, price, rating}) {
     const [{basket}, dispatch] = useStateValue();
@@ -17,6 +19,15 @@ function Product({id, title, image, price, rating}) {
                 rating:rating,
             }, 
         })
+        toast.dark("Product Added in Basket!",{
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            });
     }
 
     return (

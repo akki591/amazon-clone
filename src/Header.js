@@ -5,6 +5,7 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import { Link } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import { auth } from './firebase';
+import { ToastContainer, toast } from 'react-toastify';
 
 function Header() {
     const [{basket,user}] = useStateValue();
@@ -16,6 +17,7 @@ function Header() {
     }
     return (
         <div className="header">
+            <ToastContainer />
             <Link to="/">
                 <img className='header__logo' src="https://pngimg.com/uploads/amazon/amazon_PNG11.png"/>
             </Link>

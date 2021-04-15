@@ -1,6 +1,8 @@
 import React from 'react';
 import "./CheckoutProduct.css";
 import { useStateValue } from './StateProvider';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function CheckoutProduct({id,title,image,rating,price,hideBtn}) {
     const [{basket},dispatch] = useStateValue();
@@ -10,6 +12,15 @@ function CheckoutProduct({id,title,image,rating,price,hideBtn}) {
             type: "REMOVE_ITEM",
             id: id,
         })
+        toast.error("Product Removed !",{
+            position: "bottom-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            });
     }
     return (
         <div className="checkoutProduct">
